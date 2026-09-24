@@ -1,4 +1,7 @@
 # control_computer
+| ⚠️ Important |
+|---|
+| Of course, this assumes you have the firmware flashed on your Atech board. |
 
 A physical Alt+Tab knob and Super button for Linux, built on an Atech ESP32-S3 board.
 
