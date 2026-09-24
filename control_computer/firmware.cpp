@@ -16,6 +16,7 @@
 #include "modules/connectivity/serial_templates.h"
 #include "modules/input/rotary_encoder.h"
 #include "modules/display/st7735_tft.h"
+#include "modules/input/button.h"
 // EMBEDDED_SOUNDS_FP: none
 #include <ArduinoJson.h>
 
@@ -31,6 +32,7 @@ AtechSerial wifi(115200);
 // Pins swapped for left-side placement: port_2 pins first, port_1 pins second
 RotaryEncoder rotary_encoder_1(5, 4, 9, 8);
 ST7735_TFT st7735_tft_1(2, 41, 1, 40);
+ButtonModule button_1(6, true);
 
 
 // User behavior variables and helper functions
@@ -111,6 +113,8 @@ void handleMessage(const char* action, const char* value) {
     switchCount = 0;
     rotary_encoder_1.resetPosition();
     lastKnobPos = 0;
+  } else if (strcmp(action, "trigger_super_key") == 0) {
+    wifi.postButtonEvent("super_key", 1);
   }
 }
 
@@ -152,6 +156,11 @@ void mainTask(void* parameter) {
 
         if (rotary_encoder_1.wasPressed()) {
         wifi.postButtonEvent("knob_press", 1);
+        }
+
+        button_1.update();
+        if (button_1.wasPressed()) {
+        wifi.postButtonEvent("super_key", 1);
         }
 
         if (millis() - lastRenderMs >= 16) {
@@ -205,6 +214,7 @@ void setup() {
   // Initialize modules
   rotary_encoder_1.begin();
   st7735_tft_1.begin();
+  button_1.begin();
 
   // ========== USB-SERIAL TRANSPORT ==========
   wifi.connect();  // Serial.begin(115200) — always succeeds
