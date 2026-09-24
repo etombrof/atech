@@ -2,6 +2,8 @@
 
 A physical Alt+Tab knob and Super button for Linux, built on an Atech ESP32-S3 board.
 
+<p align="center"><img src="demo.gif" width="240" alt="Turning the knob switches windows"></p>
+
 - **Turn the knob**: step through open windows, like holding Alt and pressing Tab.
 - **Press the knob**: switch to the highlighted window. It also switches by itself 3 seconds after your last turn.
 - **Press the middle button**: tap the Super key, which opens the GNOME overview.
